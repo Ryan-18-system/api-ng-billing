@@ -4,12 +4,9 @@ import dev.ryan.nobrega.application.strategy.PaymentMethodStrategy;
 import dev.ryan.nobrega.domain.model.enums.PaymentMethod;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Any;
-import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Instance;
-import jakarta.inject.Inject;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.StreamSupport;
 
