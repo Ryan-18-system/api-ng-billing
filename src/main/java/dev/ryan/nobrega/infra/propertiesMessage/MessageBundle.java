@@ -1,4 +1,4 @@
-package dev.ryan.nobrega.propertiesMessage;
+package dev.ryan.nobrega.infra.propertiesMessage;
 
 import java.text.MessageFormat;
 import java.util.MissingResourceException;
