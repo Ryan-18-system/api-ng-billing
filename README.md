@@ -65,12 +65,32 @@ A API estará disponível em:
 ## 🗃️ Estrutura esperada do projeto
 
 ```
-ng-billing/
+dev.ryan.nobrega/
 ├── docker/
 │   └── docker-compose.yml
 ├── src/
 │   └── main/
 │       ├── java/
+│       │   └── dev/ryan/nobrega/
+│       │       ├── application/
+│       │       │   ├── exception/
+│       │       │   ├── factory/
+│       │       │   ├── mapper/
+│       │       │   ├── service/
+│       │       │   └── strategy/
+│       │       ├── domain/
+│       │       │   ├── model/
+│       │       │   └── repositories/
+│       │       ├── infra/
+│       │       │   ├── propertiesMessage/
+│       │       │   └── serializer/
+│       │       ├── utils/
+│       │       │   ├── ConstantesDB.java
+│       │       │   ├── FinanceUtils.java
+│       │       │   └── UtilsDev.java
+│       │       └── web/
+│       │           ├── AccountResource.java
+│       │           └── BankPercentageResource.java
 │       └── resources/
 │           └── import.sql
 ├── README.md
