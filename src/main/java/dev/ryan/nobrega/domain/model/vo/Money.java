@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 @Embeddable
 public class Money {
-    @Column(name = "cash", nullable = false)
+    @Column(name = "cash", nullable = false,columnDefinition = "numeric(10, 2)")
     private BigDecimal amount;
 
     protected Money() {
