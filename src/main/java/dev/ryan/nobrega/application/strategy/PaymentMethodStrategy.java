@@ -1,6 +1,8 @@
 package dev.ryan.nobrega.application.strategy;
 
+import dev.ryan.nobrega.application.exception.ApplicationServiceException;
 import dev.ryan.nobrega.domain.model.dto.BankTransactionDTO;
+import dev.ryan.nobrega.domain.model.entities.Account;
 import dev.ryan.nobrega.domain.model.enums.PaymentMethod;
 
 /**
@@ -9,5 +11,5 @@ import dev.ryan.nobrega.domain.model.enums.PaymentMethod;
  */
 public interface PaymentMethodStrategy {
     PaymentMethod getType();
-    void process(BankTransactionDTO transaction);
+    void process(Account account, BankTransactionDTO transaction)throws ApplicationServiceException;
 }

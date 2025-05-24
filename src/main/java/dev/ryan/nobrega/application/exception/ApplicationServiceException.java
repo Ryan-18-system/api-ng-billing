@@ -1,7 +1,7 @@
 package dev.ryan.nobrega.application.exception;
 
 
-import dev.ryan.nobrega.propertiesMessage.MessageBundle;
+import dev.ryan.nobrega.infra.propertiesMessage.MessageBundle;
 
 import java.io.Serial;
 import java.io.Serializable;

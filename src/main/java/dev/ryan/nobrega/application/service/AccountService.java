@@ -8,12 +8,15 @@ import dev.ryan.nobrega.application.strategy.PaymentMethodStrategy;
 import dev.ryan.nobrega.domain.model.dto.AccountDTO;
 import dev.ryan.nobrega.domain.model.dto.BankTransactionDTO;
 import dev.ryan.nobrega.domain.model.entities.Account;
+import dev.ryan.nobrega.domain.model.entities.BankPercentage;
 import dev.ryan.nobrega.domain.repositories.AccountRepository;
+import dev.ryan.nobrega.utils.FinanceUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -23,17 +26,21 @@ public class AccountService {
     private final AccountMapper accountMapper;
     private final AccountRepository accountRepository;
 
+
     @Inject
     public AccountService(PaymentMethodStrategyFactory strategyFactory, AccountMapper accountMapper, AccountRepository accountRepository) {
         this.strategyFactory = strategyFactory;
         this.accountMapper = accountMapper;
         this.accountRepository = accountRepository;
+
     }
 
+    @Transactional
     public AccountDTO processBankTransaction(BankTransactionDTO transaction) throws ApplicationServiceException {
         PaymentMethodStrategy strategy = strategyFactory.getStrategy(transaction.getPaymentType());
-        strategy.process(transaction);
-        return new AccountDTO();
+        Account accountDB = this.accountRepository.getAccountByNumber(transaction.getNumberAccount());
+        strategy.process(accountDB, transaction);
+        return accountMapper.toDTO(accountDB);
     }
 
     @Transactional

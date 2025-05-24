@@ -37,8 +37,7 @@ public class AccountResource {
     @Path("/transacao")
     @Operation(summary = "Processar uma transação através da conta, valor e método de pagamento")
     public Response processTransaction(BankTransactionDTO transaction) throws ApplicationServiceException {
-        service.processBankTransaction(transaction);
-        return Response.ok("Transação processada com sucesso!").build();
+        return Response.status(Response.Status.CREATED).entity(service.processBankTransaction(transaction)).build();
     }
 
     @POST
@@ -55,11 +54,8 @@ public class AccountResource {
     @GET
     @Path("/conta")
     @Operation(summary = "Buscar uma conta pelo número")
-    public Response createAccount(  @Parameter(
-            description = "Número da conta",
-            example = "123456",
-            required = true
-    )@QueryParam("numero_conta") Integer accountNumber) throws ApplicationServiceException {
+    public Response findAccount(@Parameter(description = "Número da conta", required = true) @QueryParam("numero_conta") Integer accountNumber)
+            throws ApplicationServiceException {
         return Response.status(Response.Status.OK).entity(service.findAccountByNumber(accountNumber)).build();
     }
 }

@@ -1,11 +1,14 @@
 package dev.ryan.nobrega.domain.model.entities;
 
 
+import dev.ryan.nobrega.application.exception.ApplicationServiceException;
 import dev.ryan.nobrega.domain.model.vo.Money;
 import jakarta.persistence.*;
+import jakarta.ws.rs.core.Response;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import static dev.ryan.nobrega.utils.ConstantesDB.DB_SCHEMA;
 import static dev.ryan.nobrega.utils.ConstantesDB.TB_ACCOUNT;
@@ -30,6 +33,32 @@ public class Account extends BaseEntity implements Serializable {
     private Money money;
 
     public Account() {
+    }
+
+    public void add(BigDecimal value) throws ApplicationServiceException {
+        try {
+            Money amountToSubtract = new Money(value);
+            this.money.add(amountToSubtract);
+        } catch (IllegalArgumentException e) {
+            throw new ApplicationServiceException(
+                    "valor.insuficiente",
+                    422,
+                    new String[]{value.toPlainString()}
+            );
+        }
+    }
+
+    public void subtract(BigDecimal value) throws ApplicationServiceException {
+        try {
+            Money amountToSubtract = new Money(value);
+            this.money.subtract(amountToSubtract);
+        } catch (IllegalArgumentException e) {
+            throw new ApplicationServiceException(
+                    "valor.insuficiente",
+                    422,
+                    new String[]{value.toPlainString()}
+            );
+        }
     }
 
     public Long getId() {
