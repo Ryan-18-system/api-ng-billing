@@ -1,7 +1,10 @@
 package dev.ryan.nobrega.domain.model.vo;
 
+import dev.ryan.nobrega.application.exception.ApplicationServiceException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.ws.rs.core.Response;
+import jdk.jshell.Snippet;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,7 +17,7 @@ import java.util.Objects;
  */
 @Embeddable
 public class Money {
-    @Column(name = "cash", nullable = false,columnDefinition = "numeric(10, 2)")
+    @Column(name = "cash", nullable = false, columnDefinition = "numeric(10, 2)")
     private BigDecimal amount;
 
     protected Money() {
@@ -31,7 +34,10 @@ public class Money {
         this.amount = this.amount.add(other.amount);
     }
 
-    public void subtract(Money other) {
+    public void subtract(Money other) throws ApplicationServiceException {
+        if (this.amount.compareTo(other.amount) < 0) {
+            throw new ApplicationServiceException("error.subtract.amount", 422, new String[]{other.amount.toString(), this.amount.toString()});
+        }
         this.amount = this.amount.subtract(other.amount);
     }
 
