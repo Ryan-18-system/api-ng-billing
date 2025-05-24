@@ -15,7 +15,7 @@ import java.util.Objects;
 @Embeddable
 public class Money {
     @Column(name = "cash", nullable = false)
-    private BigDecimal cash;
+    private BigDecimal amount;
 
     protected Money() {
     }
@@ -24,34 +24,31 @@ public class Money {
         if (valor == null || valor.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Valor deve ser positivo ou zero");
         }
-        this.cash = valor.setScale(2, RoundingMode.HALF_UP);
+        this.amount = valor.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public void somar(Money outro) {
-        this.cash = this.cash.add(outro.cash);
+    public void add(Money other) {
+        this.amount = this.amount.add(other.amount);
     }
 
-    public void subtrair(Money outro) {
-        this.cash = this.cash.subtract(outro.cash);
+    public void subtract(Money other) {
+        this.amount = this.amount.subtract(other.amount);
     }
 
-    public boolean isZero() {
-        return BigDecimal.ZERO.compareTo(this.cash) == 0;
-    }
 
-    public BigDecimal getCash() {
-        return cash;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Money money)) return false;
-        return Objects.equals(getCash(), money.getCash());
+        return Objects.equals(getAmount(), money.getAmount());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCash());
+        return Objects.hash(getAmount());
     }
 }
