@@ -1,9 +1,9 @@
 package dev.ryan.nobrega.domain.model.enums;
 
 public enum PaymentMethod {
-    PIX("P", "Pix"),
-    CREDITO("C", "Cartão de Crédito"),
-    DEBITO("D", "Cartão de Débito");
+    P("P", "Pix"),
+    C("C", "Cartão de Crédito"),
+    D("D", "Cartão de Débito");
 
     private final String codigo;
     private final String descricao;
