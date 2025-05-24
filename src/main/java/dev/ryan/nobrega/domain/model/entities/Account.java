@@ -16,7 +16,12 @@ public class Account extends BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1873944901676974563L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_seq_gen")
+    @SequenceGenerator(
+            name = "account_seq_gen",            // nome interno do generator (JPA)
+            sequenceName = "ngbilling.account_seq",        // nome real da sequence no banco
+            allocationSize = 20
+    )
     private Long id;
     @Column(name = "number_account")
     private Integer numberAccount;
