@@ -1,6 +1,3 @@
--- This file allow to write SQL commands that will be emitted in test and dev.
--- The commands are commented as their support depends of the database
--- insert into myentity (id, field) values(1, 'field-1');
--- insert into myentity (id, field) values(2, 'field-2');
--- insert into myentity (id, field) values(3, 'field-3');
--- alter sequence myentity_seq restart with 4;
+create schema if not exists ngbilling;
+create sequence if not exists ngbilling.account_seq start with 1 increment by 1;
+create table ngbilling.tb_account ( id bigint not null default nextval('ngbilling.account_seq'), active boolean, create_at timestamp(6), update_at timestamp(6), cash numeric(10, 2) not null, number_account integer, primary key (id));
