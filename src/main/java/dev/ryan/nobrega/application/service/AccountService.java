@@ -14,6 +14,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -46,5 +47,13 @@ public class AccountService {
         Account newAccount = accountMapper.toEntity(dto);
         this.accountRepository.persist(newAccount);
         return accountMapper.toDTO(newAccount);
+    }
+
+    public AccountDTO findAccountByNumber(Integer numberAccount) throws ApplicationServiceException {
+        if (Objects.isNull(numberAccount)) {
+            throw new ApplicationServiceException("required.number.account", Response.Status.BAD_REQUEST.getStatusCode());
+        }
+        Account accountDB = this.accountRepository.getAccountByNumber(numberAccount);
+        return this.accountMapper.toDTO(accountDB);
     }
 }

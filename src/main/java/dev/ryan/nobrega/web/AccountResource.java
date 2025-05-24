@@ -8,18 +8,16 @@ import dev.ryan.nobrega.domain.model.dto.BankTransactionDTO;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import java.util.Set;
 
-@Path("/transacoes")
+@Path("/account")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(
@@ -28,6 +26,7 @@ import java.util.Set;
 public class AccountResource {
     private final AccountService service;
     private final Validator validator;
+
     @Inject
     public AccountResource(AccountService service, Validator validator) {
         this.service = service;
@@ -51,5 +50,16 @@ public class AccountResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorDTO(violations)).build();
         }
         return Response.status(Response.Status.CREATED).entity(service.createBankAccount(dto)).build();
+    }
+
+    @GET
+    @Path("/conta")
+    @Operation(summary = "Buscar uma conta pelo número")
+    public Response createAccount(  @Parameter(
+            description = "Número da conta",
+            example = "123456",
+            required = true
+    )@QueryParam("numero_conta") Integer accountNumber) throws ApplicationServiceException {
+        return Response.status(Response.Status.OK).entity(service.findAccountByNumber(accountNumber)).build();
     }
 }
