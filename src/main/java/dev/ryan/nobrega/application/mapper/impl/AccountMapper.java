@@ -26,7 +26,7 @@ public class AccountMapper implements Mapper<Account, AccountDTO> {
             Money amount = new Money(dto.getAmount());
             entity.setMoney(amount);
             return entity;
-        } catch (IllegalStateException illEx) {
+        } catch (IllegalArgumentException illEx) {
             throw new MapperException(illEx.getMessage(), illEx);
         }
     }
