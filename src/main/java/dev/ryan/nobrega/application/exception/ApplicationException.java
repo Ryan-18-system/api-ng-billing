@@ -1,4 +1,4 @@
-package dev.ryan.nobrega.exception;
+package dev.ryan.nobrega.application.exception;
 
 
 import dev.ryan.nobrega.propertiesMessage.MessageBundle;
